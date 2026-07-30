@@ -1,0 +1,47 @@
+{
+  // 确保 GUI 启动的 VS Code 也能找到 BasicTeX 的工具
+  "latex-workshop.latex.tools": [
+    {
+      "name": "xelatexmk",
+      "command": "latexmk",
+      "args": [
+        "-xelatex",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ],
+      "env": {
+        "PATH": "/usr/local/texlive/2026basic/bin/universal-darwin:/usr/local/bin:/usr/bin:/bin"
+      }
+    }
+  ],
+  // 编译方案：只用 xelatex + latexmk
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "XeLaTeX (latexmk)",
+      "tools": ["xelatexmk"]
+    }
+  ],
+  // 强制使用上面的 recipe，忽略 .tex 里的 "% !TEX program" 魔法注释
+  // （否则会直接 spawn xelatex，而 GUI 启动的 VS Code 的 PATH 里没有 TeXLive，导致 ENOENT）
+  "latex-workshop.latex.build.forceRecipeUsage": true,
+  // 保存时自动编译
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  // 编译产生的中间文件收进 build 子目录，保持项目整洁
+  "latex-workshop.latex.outDir": "%DIR%",
+  // 编译成功后自动清理中间文件（保留 pdf）
+  "latex-workshop.latex.autoClean.run": "onBuilt",
+  "latex-workshop.latex.clean.fileTypes": [
+    "*.aux", "*.bbl", "*.blg", "*.idx", "*.ind", "*.lof", "*.lot",
+    "*.out", "*.toc", "*.acn", "*.acr", "*.alg", "*.glg", "*.glo",
+    "*.gls", "*.fls", "*.log", "*.fdb_latexmk", "*.snm", "*.nav",
+    "*.synctex.gz", "*.xdv"
+  ],
+  // PDF 在 VS Code 标签页内预览
+  "latex-workshop.view.pdf.viewer": "tab",
+  // 双保险：把 TeXLive bin 加进 LaTeX Workshop 的 PATH，避免 GUI 启动找不到工具
+  "latex-workshop.latex.tools.env": {
+    "PATH": "/usr/local/texlive/2026basic/bin/universal-darwin:/usr/local/bin:/usr/bin:/bin"
+  }
+}

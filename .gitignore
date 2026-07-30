@@ -1,0 +1,14 @@
+# LaTeX intermediate files
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.out
+*.synctex.gz
+*.xdv
+*.blg
+*.bbl
+*.toc
+
+# Preview images
+page-*.png
