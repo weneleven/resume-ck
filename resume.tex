@@ -16,6 +16,7 @@
 \titlespacing*{\section}{0cm}{*0.25}{*0.35}
 \setlist[itemize]{topsep=0.05em, itemsep=0.02em, parsep=0pt, leftmargin=1.5pc}
 \linespread{0.98}
+\definecolor{brightblue}{HTML}{1E90FF}
 
 \begin{document}
 \pagenumbering{gobble} % 吞掉页码
@@ -32,7 +33,7 @@
 
 \section{\ 教育背景}
 \noindent
-\makebox[0.3\textwidth][l]{\textbf{吉林大学--硕士(推免)}}%
+\makebox[0.3\textwidth][l]{\textbf{吉林大学--硕士\textcolor{blue}{(推免)}}}%
 \hfill
 \makebox[0.4\textwidth][c]{\textbf{软件学院/软件工程}}%
 \hfill
@@ -66,51 +67,66 @@
   \item \textbf{结果：} 在 422 万条业务数据上构造 18.8 万条训练三元组，Top10\% 高 ROI 商品命中率由 68.6\% 提升至 74.9\%，支撑冷启动商品的投前 ROI 建议。
 \end{itemize}
 
+\section{\ 科研与论文成果}
+\noindent
+\textbf{TRACE: Discovering Task-Specific Parameter via Adaptation-Aware Probing for Continual Fine-Tuning}\par
+\datedline{\textcolor{blue}{\textbf{KDD 2026, Oral, CCF-A, 学生一作}}}{2026}
+\begin{itemize}
+  \item \textbf{问题定义}：面向部署后\textbf{大模型随任务流持续获得新能力的需求}，针对顺序微调在共享参数空间中无差别写入新知识、导致跨任务干扰与灾难性遗忘的问题，将持续适配重新建模为\textbf{任务特定功能子空间发现与参数容量分配}
+  \item \textbf{方法设计}：提出 Adaptation-Aware Probing，通过单轮 warm-start 微调提取任务适应轨迹；分别基于 L2--Fisher 参数敏感度和跨任务更新方向特异性识别核心参数，仅激活约 \textbf{5\%} 的任务相关参数完成持续微调，在单一模型中实现新旧能力的低干扰共存
+  \item \textbf{实验结果}：在 DeepSeek、LLaMA、Qwen 等 1.5B--32B 模型上稳定优于现有基线；LLaMA3-8B \textbf{平均性能提升 16.95 个百分点}，并验证核心参数从 8B 向 14B/32B 模型迁移的有效性
+\end{itemize}
+
+% ===== 旧版（较长，已注释保留）=====
+% \noindent
+% \textbf{ASPIRE: Hard Sample Mining for Supervised Fine-tuning in Large Language Models}\par
+% \datedline{\textbf{Co-first Author (equal contribution), Under Review at NeurIPS 2026}}{2025}
+% \begin{itemize}
+%   \item \textbf{问题定义}：针对大模型 SFT 中简单、冗余样本占用大量训练预算，而静态数据筛选难以反映样本价值随模型能力和训练阶段变化的问题，将数据优化建模为\textbf{训练过程感知的动态样本价值估计}任务
+%   \item \textbf{方法与结果}：提出双策略困难样本挖掘框架：基于 Reward Model 分差刻画样本区分度并进行课程排序，同时利用相邻 Epoch 的 Loss 变化动态识别高价值样本；在 Dolly、Alpaca、Wizard 等数据集上稳定优于现有筛选基线，并可\textbf{插件式结合 IFD} 等 SFT 数据优化方法
+% \end{itemize}
+%
+% \noindent
+% \textbf{RICO: Think First, Classify Better}\par
+% \datedline{\textbf{Co-first Author (equal contribution), Under Review at NeurIPS 2026}}{2025}
+% \begin{itemize}
+%   \item \textbf{问题定义}：针对 LLM 直接分类容易依赖关键词与浅层模式、在否定转折、长文本和领域语义等复杂样本上推理不足，而全量多路径推理又带来较高延迟的问题，将文本分类建模为\textbf{精度--效率约束下的难度自适应推理}任务
+%   \item \textbf{方法与结果}：构建高质量分类推理链进行 LoRA 推理增强微调，并基于置信度、预测间隔和熵识别困难样本，仅对其执行多路径推理与投票；在 6 个数据集上\textbf{平均 F1 提升 35.48 个百分点}，同时将困难样本推理\textbf{时延降低 23.4\%、吞吐提升 30.7\%}
+% \end{itemize}
+
+% ===== 新版（精简）=====
+\noindent
+\textbf{ASPIRE: Hard Sample Mining for Supervised Fine-tuning in Large Language Models}\par
+\datedline{\textbf{共同一作，NeurIPS 2026 Under Review}}{2025}
+\begin{itemize}
+  \item 针对 SFT 中简单冗余样本消耗训练预算、静态筛选难以反映样本价值动态变化的问题，将其建模为\textbf{训练过程感知的数据价值估计}任务
+  \item 基于 Reward Model 分差与跨 Epoch Loss 动态刻画样本难度，构建课程排序和动态加权机制；在多个指令数据集上稳定优于现有筛选基线，并可插件式适配现有数据优化方法
+\end{itemize}
+
+\noindent
+\textbf{RICO: Think First, Classify Better}\par
+\datedline{\textbf{共同一作，NeurIPS 2026 Under Review}}{2025}
+\begin{itemize}
+  \item 针对 LLM 文本分类中复杂样本推理不足、全量 CoT 推理成本过高的问题，将其建模为\textbf{精度--效率约束下的难度自适应推理}任务
+  \item 通过高质量推理链增强微调，并基于置信度、间隔与熵将困难样本路由至多路径推理；在 6 个数据集上\textbf{平均 F1 提升 35.48 个百分点}，推理时延降低 23.4\%
+\end{itemize}
+
+\noindent
+\textbf{PNESR-DDI: An Effective Drug-Drug Interaction Prediction Model Based on Pretraining Method and Enhanced Subgraph Reconstruction}\par
+\datedline{\textcolor{blue}{\textbf{BIBM 2024, CCF-B, 第一作者}}}{2024}
+\begin{itemize}
+  \item 提出 PNESR-DDI 药物相互作用预测模型，通过\textbf{知识图谱预训练与子图重构}提升药物表示质量，在 DrugBank、TWOSIDES 上优于主流基线
+\end{itemize}
+
 \section{\ 项目经历}
 \noindent
 \textbf{自研 Agent 可靠性增强与分层工作记忆系统}\par
-\datedline{\textit{核心开发者}}{2026}
+\datedline{\textbf{核心开发者}}{2026}
 \begin{itemize}
   \item 面向多步骤工具任务中 Agent 输出不稳定、长上下文冗余影响后续决策的问题，从零搭建类 Agent 执行框架，完成\textbf{任务解析、上下文组织、工具编排、结果生成与状态返回}等核心模块设计
   \item 设计 \textbf{Result Evaluator} 对最终结果进行任务完成度、格式合法性与证据完整性校验
   \item 设计\textbf{分层工作记忆机制}，将记忆组织为摘要层、结构化状态层和详细证据层；基于 task-oriented compact 对用户偏好、工具调用结果、可复用流程等进行压缩更新，以 working memory 替代全历史上下文参与后续执行
   \item 在多步骤任务上，相比 baseline 实现\textbf{任务成功率提升 12\%、一次通过率增加 8\%、格式错误率下降 61\%}、平均 token 消耗下降 24\%、峰值上下文长度下降 37\%
-\end{itemize}
-
-\section{\ 科研经历}
-\noindent
-\textbf{TRACE: Discovering Task-Specific Parameter via Adaptation-Aware Probing for Continual Fine-Tuning}\par
-\datedline{\textit{First Student Author, KDD 2026}}{2026}
-\begin{itemize}
-  \item \textbf{问题提出与重构}：针对持续微调中新任务学习容易冲击已有知识、引发灾难性遗忘的问题，设计 adaptation-aware probing 机制识别与当前任务强相关的参数，尽量将参数更新限制在任务相关区域，降低对历史能力的破坏
-  \item \textbf{参数发现}：基于 cosine similarity、L2 norm 与 Fisher 信息构建参数重要性估计指标，对关键参数进行选择性更新
-  \item \textbf{性能提升}：在 DeepSeek/LLaMA/Qwen 上均稳定优于现有持续微调基线；以 LLaMA3-8B 为例，\textbf{平均性能较最强基线提升 36.6\%}；在长序列下仍保持鲁棒性；TRACE 具有跨模型迁移能力：在小模型上识别出的关键参数迁移到 Qwen3-32B 后，\textbf{较 SOTA 基线提升 12\%}
-\end{itemize}
-
-\noindent
-\textbf{RICO: Think First, Classify Better}\par
-\datedline{\textit{Co-first Author (equal contribution), Under Review at ICML 2026}}{2025}
-\begin{itemize}
-  \item \textbf{问题及核心痛点}：针对大模型做文本分类时普遍存在的“推理盲区”问题：传统直接预测范式容易依赖关键词匹配、浅层模式和局部线索，在转折、否定、长文本、领域文本等复杂样本上容易误判，分类结果鲁棒性不足
-  \item \textbf{方法设计}：设计双路径分类框架 RICO，构建“教师模型生成分类推理链 $\rightarrow$ 过滤错误/不完整推理数据 $\rightarrow$ 基于 LoRA 进行推理增强微调 $\rightarrow$ 基于置信度/间隔/熵进行难样本路由 $\rightarrow$ 对难样本执行多条推理链投票”的完整流程，在控制推理成本的同时显式增强模型分类推理能力
-  \item \textbf{性能提升}：在 6 个文本分类数据集上验证有效，LLaMA3.1-8B-RICO 相比原始模型，\textbf{平均 ACC 从 43.81\% 提升到 71.63\%}（+27.82 个百分点），\textbf{平均 F1 从 47.25\% 提升到 82.73\%}（+35.48 个百分点）；在 R52 数据集上，相比全量多路径推理，平均时延从 5.94s 降至 4.55s（-23.4\%），吞吐从 10.1 提升到 13.2 samples/min（+30.7\%），实现精度与效率的更优平衡
-\end{itemize}
-
-\noindent
-\textbf{ASPIRE: Hard Sample Mining for Supervised Fine-tuning in Large Language Models}\par
-\datedline{\textit{Co-first Author (equal contribution), Under Review at ICML 2026}}{2025}
-\begin{itemize}
-  \item \textbf{问题背景}：面向大模型监督微调中“简单样本占比高、训练冗余大、模型对边界样本学习不足”的问题，聚焦后训练阶段的数据效率优化，提升有限训练预算下的样本利用率与泛化能力
-  \item \textbf{双策略挖掘}：设计双策略困难样本挖掘框架 ASPIRE：其中 ASPIRE-S 基于 Reward Model 分差 $\Delta S$ 对样本进行课程化排序，ASPIRE-D 基于相邻 epoch 的训练 loss 动态加权，无需人工启发式规则即可自动识别高价值样本
-  \item \textbf{性能提升}：在 Dolly/Alpaca/Wizard 等数据集上稳定优于 SOTA 基线，验证了低成本数据筛选 + 高效微调的可行性；同时还能作为插件式模块叠加到 IFD 等现有 SFT 数据优化流程中
-\end{itemize}
-
-\section{\ 学术成果}
-\noindent
-\textbf{PNESR-DDI: An Effective Drug-Drug Interaction Prediction Model Based on Pretraining Method and Enhanced Subgraph Reconstruction}\par
-\datedline{\textit{First Author, BIBM (CCF-B)}}{2024}
-\begin{itemize}
-  \item 提出 PNESR-DDI 药物相互作用预测模型，通过\textbf{知识图谱预训练与子图重构}提升药物表示质量，在 DrugBank、TWOSIDES 上优于主流基线
 \end{itemize}
 
 \section{\ 专业技能}
