@@ -15,7 +15,7 @@
 \titleformat{\section}{\Large\bfseries\raggedright}{}{0em}{}[\titlerule]
 \titlespacing*{\section}{0cm}{*0.25}{*0.35}
 \setlist[itemize]{topsep=0.05em, itemsep=0.02em, parsep=0pt, leftmargin=1.5pc}
-\linespread{0.98}
+\linespread{0.96}
 \definecolor{brightblue}{HTML}{1E90FF}
 
 \begin{document}
@@ -58,7 +58,7 @@
 \begin{itemize}
   % \item \textbf{问题:} 在有限广告激励资源下，核心是识别“因激励才会采纳”的高增量广告主；建模为因果推断任务，重点应对反事实不可观测、采纳正样本稀疏及激励非随机下发导致的强混杂问题。
   \item \textbf{贡献：} 利用 Transformer 统一建模序列与非序列异构特征，通过显式 Uplift Head 直接预测个体激励增量；引入 \textbf{LLM 双情境反事实推理补充稠密增量监督}，并利用 Doubly Robust 正交排序融合真实反馈。
-  \item \textbf{结果：} 在 60 万条业务数据上，测试集 AUUC 相对最强基线提升 \textbf{67.5\%}；\textbf{形成一篇论文在投}。
+  \item \textbf{结果：} 在 100w条业务数据上，测试集 AUUC 相对最强基线提升 \textbf{67.5\%}；\textbf{形成一篇论文在投}。
 \end{itemize}
 \vspace{0.3ex}
 \textbf{基于 LLM 商品理解的广告 ROI 预测与投前建议}：针对商品类目挂载偏差及\textbf{冷启动商品}历史投放信息不足导致的 ROI 建议不准问题，从商品内容出发，建模为融合语义与业务属性的 ROI 预测。
@@ -115,24 +115,40 @@
 \textbf{PNESR-DDI: An Effective Drug-Drug Interaction Prediction Model Based on Pretraining Method and Enhanced Subgraph Reconstruction}\par
 \datedline{\textcolor{blue}{\textbf{BIBM 2024, CCF-B, 第一作者}}}{2024}
 \begin{itemize}
-  \item 提出 PNESR-DDI 药物相互作用预测模型，通过\textbf{知识图谱预训练与子图重构}提升药物表示质量，在 DrugBank、TWOSIDES 上优于主流基线
+  \item 提出 PNESR-DDI 药物相互作用预测模型，通过\textbf{知识图谱预训练与子图重构}提升药物表示质量.
+  % ，在 DrugBank、TWOSIDES 上优于主流基线
 \end{itemize}
 
 \section{\ 项目经历}
 \noindent
-\textbf{自研 Agent 可靠性增强与分层工作记忆系统}\par
-\datedline{\textbf{核心开发者}}{2026}
+% ===== 旧版（已注释保留）=====
+% \textbf{自研 Agent 可靠性增强与分层工作记忆系统}\par
+% \datedline{\textbf{核心开发者}}{2026}
+% \begin{itemize}
+%   \item 面向多步骤工具任务中 Agent 输出不稳定、长上下文冗余影响后续决策的问题，从零搭建类 Agent 执行框架，完成\textbf{任务解析、上下文组织、工具编排、结果生成与状态返回}等核心模块设计
+%   \item 设计 \textbf{Result Evaluator} 对最终结果进行任务完成度、格式合法性与证据完整性校验
+%   \item 设计\textbf{分层工作记忆机制}，将记忆组织为摘要层、结构化状态层和详细证据层；基于 task-oriented compact 对用户偏好、工具调用结果、可复用流程等进行压缩更新，以 working memory 替代全历史上下文参与后续执行
+%   \item 在多步骤任务上，相比 baseline 实现\textbf{任务成功率提升 12\%、一次通过率增加 8\%、格式错误率下降 61\%}、平均 token 消耗下降 24\%、峰值上下文长度下降 37\%
+% \end{itemize}
+
+% ===== 新版 =====
+\makebox[0.85\textwidth][l]{\textbf{面向长程 Code Agent 的任务感知上下文压缩与外部记忆}}\hfill\makebox[0.15\textwidth][r]{2026}\par
+% \textbf{面向长程 Code Agent 的任务感知上下文压缩与外部记忆}\par
+% \datedline{\textbf{个人算法研究与原型实现}}{2026}
 \begin{itemize}
-  \item 面向多步骤工具任务中 Agent 输出不稳定、长上下文冗余影响后续决策的问题，从零搭建类 Agent 执行框架，完成\textbf{任务解析、上下文组织、工具编排、结果生成与状态返回}等核心模块设计
-  \item 设计 \textbf{Result Evaluator} 对最终结果进行任务完成度、格式合法性与证据完整性校验
-  \item 设计\textbf{分层工作记忆机制}，将记忆组织为摘要层、结构化状态层和详细证据层；基于 task-oriented compact 对用户偏好、工具调用结果、可复用流程等进行压缩更新，以 working memory 替代全历史上下文参与后续执行
-  \item 在多步骤任务上，相比 baseline 实现\textbf{任务成功率提升 12\%、一次通过率增加 8\%、格式错误率下降 61\%}、平均 token 消耗下降 24\%、峰值上下文长度下降 37\%
+  % ===== 旧版要点（已注释保留）=====
+  % \item \textbf{问题定义}：基于 Claude Code、Codex、Hermes 的长程代码任务实践，发现代码、日志与工具轨迹持续累积会造成上下文膨胀，而通用 Compact 容易丢失旧模块实现、运行流程与关键决策；将其建模为\textbf{有限上下文预算下的任务知识保持与恢复}问题
+  % \item \textbf{方法设计}：在不修改 Code Agent 源码的前提下，利用 Hooks 构建\textbf{外部记忆层}，分层维护模块卡片、结构化 Working State、运行 Runbook 与原始证据，并通过 Git 版本与文件 Hash 校验记忆有效性
+  % \item \textbf{记忆召回}：将模块沉淀与恢复封装为 \textbf{checkpoint-module、recall-module} 等 Skills，根据当前 Prompt、文件路径和代码符号动态召回旧模块知识，避免 Compact 后重新探索
+  % ===== 新版要点 =====
+  \item 针对 Claude Code、Codex 等 Code Agent 在长程任务中因上下文膨胀与 Compact 导致旧模块实现、运行流程和关键决策丢失的问题，将其建模为\textbf{有限上下文预算下的任务知识保持与恢复}问题
+  \item 基于 Hooks 构建\textbf{外部记忆层}，分层维护模块知识、当前任务状态、运行指令与原始证据，并通过 Skills 按任务动态召回相关记忆，减少 Compact 后的重复探索
 \end{itemize}
 
 \section{\ 专业技能}
 \begin{itemize}[parsep=0.5ex]
   \item \textbf{LLM 训练与推理}：SFT, LoRA, RLHF, DeepSpeed, vLLM, Prompt Engineering
-  \item \textbf{Agent 开发}：Tool Calling, Evaluator Harness, Task Parsing, 自主执行链路
+  \item \textbf{Agent 与上下文管理：}：Tool Calling, Claude Code Hooks, Skills, Context Compaction, Memory Management
   \item \textbf{英语水平}：CET-4: 603, CET-6: 551
 \end{itemize}
 

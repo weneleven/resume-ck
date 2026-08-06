@@ -12,3 +12,6 @@
 
 # Preview images
 page-*.png
+
+# macOS
+.DS_Store
